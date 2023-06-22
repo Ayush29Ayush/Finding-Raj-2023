@@ -1,6 +1,6 @@
 //!  this code sets up a context and provider for managing GitHub user data. It fetches user data from the GitHub API, stores it in state variables, and provides access to this data throughout the application using the GithubContext.Provider.
-
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
+import githubReducer from "./GithubReducer";
 
 const GithubContext = createContext();
 
@@ -9,8 +9,15 @@ const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 // eslint-disable-next-line react/prop-types
 export const GithubProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  //! initialState will be an object
+  const initialState = {
+    users: [],
+    loading: true,
+  };
+
+  //! Similar to useState syntax, in place of variable, we have our state, in place of our setVariable function to handle variable, we have dispatch to handle our state.
+  //! useReducer(githubReducer, initialState) => githubReducer is the group of cases actions and their working accordingly, and the initial state will be equaL to "initialState".
+  const [state, dispatch] = useReducer(githubReducer, initialState);
 
   const fetchUsers = async () => {
     const response = await fetch(`${GITHUB_URL}/users`, {
@@ -22,15 +29,17 @@ export const GithubProvider = ({ children }) => {
     // ! This converts the response to json format
     const data = await response.json();
 
-    setUsers(data);
-    setLoading(false);
+    dispatch({
+      type: "GET_USERS",
+      payload: data,
+    });
   };
 
   return (
     <GithubContext.Provider
       value={{
-        users,
-        loading,
+        users: state.users,
+        loading: state.loading,
         fetchUsers,
       }}
     >
