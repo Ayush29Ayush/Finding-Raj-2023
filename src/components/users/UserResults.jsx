@@ -9,7 +9,7 @@ function UserResults() {
   //! The useEffect hook executes the fetchUsers function once, immediately after the component mounts. It ensures that the user data is fetched and processed when the component is first rendered.
   useEffect(() => {
     fetchUsers();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!loading) {
