@@ -12,14 +12,17 @@ export const GithubProvider = ({ children }) => {
   //! initialState will be an object
   const initialState = {
     users: [],
-    loading: true,
+    loading: false,
   };
 
   //! Similar to useState syntax, in place of variable, we have our state, in place of our setVariable function to handle variable, we have dispatch to handle our state.
   //! useReducer(githubReducer, initialState) => githubReducer is the group of cases actions and their working accordingly, and the initial state will be equaL to "initialState".
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
+  //! Get initial users (testing purposes)
   const fetchUsers = async () => {
+    setLoading();
+
     const response = await fetch(`${GITHUB_URL}/users`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`,
@@ -34,6 +37,9 @@ export const GithubProvider = ({ children }) => {
       payload: data,
     });
   };
+
+  //! Set Loading
+  const setLoading = () => dispatch({ type: "SET_LOADING" });
 
   return (
     <GithubContext.Provider
