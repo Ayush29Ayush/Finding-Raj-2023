@@ -1,4 +1,5 @@
 import UserResults from "../components/users/UserResults";
+import UserSearch from "../components/users/UserSearch";
 
 function Home() {
   return (
@@ -7,6 +8,8 @@ function Home() {
       {/* <p>The URL of github api is {import.meta.env.VITE_GITHUB_URL}</p> */}
 
       {/* //! SEARCH COMPONENT */}
+      <UserSearch />
+      {/* //! DISPLAY FETCHED USERS  */}
       <UserResults />
     </>
   );
