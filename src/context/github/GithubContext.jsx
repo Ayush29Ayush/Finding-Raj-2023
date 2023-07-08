@@ -19,7 +19,7 @@ export const GithubProvider = ({ children }) => {
   //! useReducer(githubReducer, initialState) => githubReducer is the group of cases actions and their working accordingly, and the initial state will be equaL to "initialState".
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
-   //! Get search results
+  //! Get search results
   const searchUsers = async (text) => {
     setLoading();
 
@@ -36,13 +36,16 @@ export const GithubProvider = ({ children }) => {
     // ! This converts the response to json format
     // const data = await response.json();
     //! Destructure and get the items part, hit a API call to see what I am talking about
-    const {items} = await response.json();
+    const { items } = await response.json();
 
     dispatch({
       type: "GET_USERS",
       payload: items,
     });
   };
+
+  //! Clear users from state
+  const clearUsers = () => dispatch({ type: "CLEAR_USERS" });
 
   //! Set Loading
   const setLoading = () => dispatch({ type: "SET_LOADING" });
@@ -53,6 +56,7 @@ export const GithubProvider = ({ children }) => {
         users: state.users,
         loading: state.loading,
         searchUsers,
+        clearUsers,
       }}
     >
       {children}
