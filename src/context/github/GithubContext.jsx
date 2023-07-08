@@ -19,22 +19,28 @@ export const GithubProvider = ({ children }) => {
   //! useReducer(githubReducer, initialState) => githubReducer is the group of cases actions and their working accordingly, and the initial state will be equaL to "initialState".
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
-  //! Get initial users (testing purposes)
-  const fetchUsers = async () => {
+   //! Get search results
+  const searchUsers = async (text) => {
     setLoading();
 
-    const response = await fetch(`${GITHUB_URL}/users`, {
+    const params = new URLSearchParams({
+      q: text,
+    });
+
+    const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`,
       },
     });
 
     // ! This converts the response to json format
-    const data = await response.json();
+    // const data = await response.json();
+    //! Destructure and get the items part, hit a API call to see what I am talking about
+    const {items} = await response.json();
 
     dispatch({
       type: "GET_USERS",
-      payload: data,
+      payload: items,
     });
   };
 
@@ -46,7 +52,7 @@ export const GithubProvider = ({ children }) => {
       value={{
         users: state.users,
         loading: state.loading,
-        fetchUsers,
+        searchUsers,
       }}
     >
       {children}
