@@ -1,1 +1,22 @@
 https://www.robinwieruch.de/javascript-reducer/
+
+
+
+
+Ques) What is the purpose of createContext, useContext and useReducer. I am using createContext and useReducer in my project, is it necessary to use useContext?
+
+Ans) In React, createContext, useContext, and useReducer are all related to managing state and providing state to components in a more efficient and scalable way.
+
+createContext: The createContext function is used to create a context object. A context object allows you to share state between multiple components without having to pass props down through each level of the component tree. It consists of two components: a Provider and a Consumer (or useContext hook).
+
+useContext: The useContext hook is used to consume the value provided by the context object. It allows a component to access the current context value directly without having to use a Consumer component explicitly. By using useContext, you can access the shared state within your component and make use of it.
+
+useReducer: The useReducer hook is a built-in hook in React that provides a way to handle complex state logic by using a reducer function. It is similar to how state is managed in Redux. The useReducer hook takes in a reducer function and an initial state, and returns the current state and a dispatch function. The reducer function receives the current state and an action, and returns a new state based on the action. It is particularly useful when you have state that involves multiple sub-values or requires complex updates.
+
+Regarding your question, using useContext is not necessary when using createContext and useReducer together. However, useContext becomes useful when you want to consume the value provided by the context in a component that is not a direct descendant of the context's Provider component. In such cases, you can use useContext to access the shared state directly without needing to pass it down as props through intermediate components.
+
+To summarize, if you are already using createContext and useReducer together and you can access the state and dispatch function in your components, you might not need to use useContext. However, if you need to consume the shared state in a component that is not a direct descendant of the Provider component, you can utilize useContext to access the shared state without having to pass it down as props.
+
+Refer -> GithubContext for createContext
+Refer -> GithubContext for useReducer and GithubReducer for implementing reducers
+Refer -> UserSearch for useContext
