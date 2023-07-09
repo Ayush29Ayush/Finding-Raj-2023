@@ -5,3 +5,5 @@
 5. createContext
 6. useContext
 7. useReducer
+
+Always do _rfce or rfce to get a simple boilerplate
