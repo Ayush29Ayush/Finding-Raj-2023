@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Spinner from "../components/layout/Spinner";
+import RepoList from "../components/repos/RepoList";
 
 function User() {
-  const { getUser, user, loading } = useContext(GithubContext);
+  const { getUser, user, loading, getUserRepos, repos } = useContext(GithubContext);
 
   //! The useParams hook is used to access the parameters from the URL. In this case, it retrieves the login parameter from the URL. The params variable will hold the values of the URL parameters.
   //! useParams can be used roact-router-dom version 6 onwards
@@ -15,6 +16,7 @@ function User() {
   //! The useEffect hook is used to execute the getUser function once, immediately after the component mounts.
   useEffect(() => {
     getUser(params.login);
+    getUserRepos(params.login);
   }, []);
 
   //! Destructuring and getting all the info needed
@@ -163,6 +165,8 @@ function User() {
             </div>
           </div>
         </div>
+
+        <RepoList repos={repos} />
       </div>
     </>
   );
