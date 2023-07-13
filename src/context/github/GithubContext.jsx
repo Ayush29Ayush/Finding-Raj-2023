@@ -104,10 +104,11 @@ export const GithubProvider = ({ children }) => {
   return (
     <GithubContext.Provider
       value={{
-        users: state.users,
-        user: state.user,
-        loading: state.loading,
-        repos: state.repos,
+        // users: state.users,
+        // user: state.user,
+        // loading: state.loading,
+        // repos: state.repos,
+        ...state, // since we are passing all the states, do ...state i.e spread operator
         searchUsers,
         clearUsers,
         getUser,
